@@ -49,12 +49,12 @@ class SelectedAnswers(APIView):
         all_answers = Result.objects.values("answer")
         serializer = AnswerSerializer(all_answers, many=True)
 
-        counts = defaultdict(int)  # 중복 개수를 저장할 defaultdict 생성
+        counts = defaultdict(int)
 
-        for item in serializer.data:
-            answers = item["answer"].split(",")
+        for i in serializer.data:
+            answers = i["answer"].split(",")
             for answer in answers:
-                counts[answer] += 1  # 각 문자열의 중복 개수 카운트
+                counts[answer] += 1
 
         result = [
             {"answer": answer, "count": count} for answer, count in counts.items()
